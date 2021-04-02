@@ -1,0 +1,24 @@
+<div class="container-fluid" style="margin-left: 30px; max-width: max-content;">
+  <div *ngFor="let response of responseData">
+    <div class="row border border-primary rounded" style="margin-top: 10px ;"  *ngIf="(filter=='launchSuccess' && response.launch_success) ||
+    (filter=='launchAndLandSuccess' && response.rocket.first_stage.cores[0].land_success) ||
+    (filter=='all') || (filter=='')">
+      <div class="pull-left" style="padding: 10px 10px 10px 10px; min-width: 600px; max-width: 600px; max-height:600px">
+        <h4 class="list-group-item-heading">{{response.mission_name}}</h4>
+        <h4 class="list-group-item-heading">{{response.rocket.rocket_name}}</h4>
+        <h6 class="list-group-item-text">Launch Year : {{response.launch_year}}</h6>
+        <h6 class="list-group-item-text">Launch Date : {{response.launch_date_utc}}</h6>
+        <h6 class="list-group-item-text">Launch Site : {{response.launch_site.site_name}}</h6>
+        <h6 class="list-group-item-text bg-success" *ngIf="response.launch_success">Launch Successful</h6>
+        <h6 class="list-group-item-text bg-danger" *ngIf="!response.launch_success">Launch failed. Reason is
+          {{response.launch_failure_details.reason}}</h6>
+          <h6 class="list-group-item-text bg-success" *ngIf="response.launch_success && response.rocket.first_stage.cores[0].land_success">Land Successful</h6>
+        <p class="list-group-item-text">{{response.details}}</p>
+      </div>
+      <span class="pull-right">
+        <img src="{{response.links.mission_patch}}" alt="{{response.mission_name}}" class="img-responsive"
+          style="max-height: 150px;" />
+      </span>
+    </div>
+  </div>
+</div>
